@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  n8n:
+    image: n8n:latest
+    restart: always
+    ports:
+      - 5678:5678
+    volumes:
+      - /var/lib/docker/volumes/n8n_data:/home/node/.n8n
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST:
+      DB_POSTGRESDB_PORT:
+      DB_POSTGRESDB_DATABASE: n8n_main
+      DB_POSTGRESDB_USER:
+      DB_POSTGRESDB_PASSWORD:
+      N8N_EMAIL_MODE: none
+      N8N_HOST: example.com
+      WEBHOOK_URL: n8n.example.com
+      N8N_PORT: 5678
+      N8N_PROTOCOL: https
+      NODE_ENV: production
+      TZ: Asia/Jakarta
+      N8N_ENCRYPTION_KEY: KEY_HERE
+      GENERIC_TIMEZONE: Asia/Jakarta
+    networks:
+      - n8n_backend_network
+
+networks:
+  n8n_backend_network:
+    driver: bridge
